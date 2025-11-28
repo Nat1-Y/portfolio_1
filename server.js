@@ -1,0 +1,97 @@
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
+const path = require('path');
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+            fontSrc: ["'self'", "https://fonts.gstatic.com"],
+            scriptSrc: ["'self'", "'unsafe-inline'"],
+            imgSrc: ["'self'", "data:", "https:"],
+        },
+    },
+}));
+app.use(compression());
+app.use(cors());
+app.use(express.json());
+app.use(express.static('public'));
+
+// API Routes
+app.get('/api/profile', (req, res) => {
+    res.json({
+        name: "NATNAEL YOHANNES",
+        title: "Backend Developer",
+        profile: "Dedicated backend developer Learner with experience from the my previous college courses, Proficient in developing cross-platform mobile applications using Flutter, with knowledge acquired through comprehensive Udemy courses. Adept at applying data-driven approaches to solve complex problems, with a keen interest in artificial intelligence and mobile app development. Eager to contribute to innovative projects in the tech industry.",
+        contact: {
+            phone: "+251940830384",
+            email: "Natiyohannes.2017@gmail.com",
+            github: "https://github.com/Nat1-Y"
+        },
+        skills: [
+            "Time management",
+            "Java, C++ and Database",
+            "Python and Node",
+            "Project management",
+            "Creative problem solving",
+            "Communication skills"
+        ],
+        experience: [
+            {
+                company: "HiLCoE School of Computer Science and technology",
+                position: "Intern - Datanomic's Center",
+                location: "Addis Ababa, Ethiopia",
+                period: "June 2022 - August 2022",
+                achievements: [
+                    "Collaborated with a team of developers to design and implement backend solutions for various projects.",
+                    "Assisted in developing cross-platform mobile applications using Flutter, enhancing user experience through responsive design.",
+                    "Gained hands-on experience with database management and API integration, contributing to improved application performance.",
+                    "Participated in daily stand-up meetings and contributed ideas for optimizing workflow and project timelines."
+                ]
+            },
+            {
+                company: "Personal Projects",
+                position: "Project Contributor",
+                location: "Addis Ababa, Ethiopia",
+                period: "Ongoing",
+                achievements: [
+                    "Developed and deployed several mobile applications utilizing Flutter, focusing on user-friendly interfaces and functionality.",
+                    "Engaged in continuous learning through Udemy courses, enhancing skills in Python, Java, and Node.js.",
+                    "Actively maintained and updated a GitHub repository with project code, demonstrating commitment to open-source collaboration."
+                ]
+            }
+        ],
+        education: {
+            institution: "HiLCoE School of Computer Science and technology",
+            degree: "Degree of Computer Science"
+        }
+    });
+});
+
+// Serve the main HTML file
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Something went wrong!' });
+});
+
+// 404 handler
+app.use((req, res) => {
+    res.status(404).json({ error: 'Route not found' });
+});
+
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+    console.log(`Visit http://localhost:${PORT} to view your portfolio`);
+}); 
