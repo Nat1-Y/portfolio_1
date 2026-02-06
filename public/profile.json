@@ -10,12 +10,14 @@
   },
   "skills": [
     "JavaScript / TypeScript",
+    "Python",
     "Node.js / Express.js",
-    "React",
-    "PostgreSQL / MongoDB",
+    "Nest.js",
+    "React / Next.js /vite",
+    "PostgreSQL / MongoDB / supabase / Firebase",
     "REST APIs",
     "Flutter",
-    "Git / GitHub",
+    "Git / ci/cd",
     "Docker (Basics)"
   ],
   "experience": [
@@ -24,7 +26,7 @@
       "position": "Full Stack Developer",
       "location": "Addis Ababa, Ethiopia",
       "period": "Present",
-      "tech": ["Node.js", "Express", "React", "PostgreSQL"],
+      "tech": ["Node.js", "Express", "React", "PostgreSQL", "Nest.js", "supabase", "Firebase"],
       "achievements": [
         "Develop and maintain full stack features across the product, from UI to backend services.",
         "Design and integrate REST APIs, handling validation, authentication, and performance considerations.",
@@ -37,7 +39,7 @@
       "position": "Freelance Full Stack Developer",
       "location": "Remote",
       "period": "Ongoing",
-      "tech": ["Node.js", "React", "APIs"],
+      "tech": ["Node.js", "React","Nest.js","next.js","vite", "APIs", "supabase", "Firebase"],
       "achievements": [
         "Build websites and web apps for clients, focusing on clean UI, responsiveness, and performance.",
         "Create and integrate APIs, third‑party services, and databases depending on project needs.",
