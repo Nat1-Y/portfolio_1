@@ -2,6 +2,8 @@
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 const navLinks = document.querySelectorAll('.nav-link');
+const scrollProgress = document.getElementById('scroll-progress');
+const backToTopBtn = document.getElementById('back-to-top');
 
 // Mobile Navigation Toggle
 hamburger.addEventListener('click', () => {
@@ -43,21 +45,75 @@ window.addEventListener('scroll', () => {
         navbar.style.background = 'rgba(255, 255, 255, 0.95)';
         navbar.style.boxShadow = 'none';
     }
+
+    if (scrollProgress) {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100)) : 0;
+        scrollProgress.style.width = `${progress}%`;
+    }
+
+    if (backToTopBtn) {
+        if (window.scrollY > 600) {
+            backToTopBtn.classList.add('visible');
+        } else {
+            backToTopBtn.classList.remove('visible');
+        }
+    }
 });
+
+if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+}
 
 // Load profile data from static JSON
 async function loadProfileData() {
     try {
         const response = await fetch('profile.json');
         const data = await response.json();
+
+        const heroName = document.getElementById('hero-name');
+        const heroTitle = document.getElementById('hero-title');
+        const heroTagline = document.getElementById('hero-tagline');
+
+        if (heroName) {
+            const originalText = data.name || heroName.textContent;
+            typeWriter(heroName, originalText, 120);
+        }
+
+        if (heroTitle) {
+            heroTitle.textContent = data.title || '';
+        }
+
+        if (heroTagline) {
+            heroTagline.textContent = data.tagline || '';
+        }
+
+        if (data.name && data.title) {
+            document.title = `${data.name} - ${data.title}`;
+        }
         
         // Update profile text
         document.getElementById('profile-text').textContent = data.profile;
         
         // Update contact information
-        document.getElementById('contact-phone').textContent = data.contact.phone;
-        document.getElementById('contact-email').textContent = data.contact.email;
-        document.getElementById('contact-github').textContent = data.contact.github;
+        const phoneEl = document.getElementById('contact-phone');
+        const emailEl = document.getElementById('contact-email');
+        const githubEl = document.getElementById('contact-github');
+
+        if (phoneEl && data.contact?.phone) {
+            phoneEl.innerHTML = `<a href="tel:${data.contact.phone}">${data.contact.phone}</a>`;
+        }
+
+        if (emailEl && data.contact?.email) {
+            emailEl.innerHTML = `<a href="mailto:${data.contact.email}">${data.contact.email}</a>`;
+        }
+
+        if (githubEl && data.contact?.github) {
+            githubEl.innerHTML = `<a href="${data.contact.github}" target="_blank" rel="noopener noreferrer">${data.contact.github}</a>`;
+        }
         
         // Update education
         document.getElementById('education-institution').textContent = data.education.institution;
@@ -81,7 +137,11 @@ function loadExperienceTimeline(experience) {
     
     experience.forEach((exp, index) => {
         const timelineItem = document.createElement('div');
-        timelineItem.className = 'timeline-item fade-in-up';
+        timelineItem.className = 'timeline-item reveal';
+
+        const techTags = Array.isArray(exp.tech) && exp.tech.length
+            ? `<div class="tech-tags">${exp.tech.map(tag => `<span class="tech-tag">${tag}</span>`).join('')}</div>`
+            : '';
         
         timelineItem.innerHTML = `
             <div class="timeline-dot"></div>
@@ -89,6 +149,7 @@ function loadExperienceTimeline(experience) {
                 <h3 class="timeline-title">${exp.position}</h3>
                 <p class="timeline-company">${exp.company}</p>
                 <p class="timeline-period">${exp.location} • ${exp.period}</p>
+                ${techTags}
                 <ul class="timeline-achievements">
                     ${exp.achievements.map(achievement => `<li>${achievement}</li>`).join('')}
                 </ul>
@@ -96,6 +157,7 @@ function loadExperienceTimeline(experience) {
         `;
         
         timeline.appendChild(timelineItem);
+        observeRevealElement(timelineItem);
     });
 }
 
@@ -105,13 +167,14 @@ function loadSkills(skills) {
     
     skills.forEach(skill => {
         const skillCard = document.createElement('div');
-        skillCard.className = 'skill-card fade-in-up';
+        skillCard.className = 'skill-card reveal';
         
         skillCard.innerHTML = `
             <h3>${skill}</h3>
         `;
         
         skillsGrid.appendChild(skillCard);
+        observeRevealElement(skillCard);
     });
 }
 
@@ -246,24 +309,43 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
-// Intersection Observer for animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
+const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('fade-in-up');
+            entry.target.classList.add('reveal-visible');
+            revealObserver.unobserve(entry.target);
         }
     });
-}, observerOptions);
+}, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
 
-// Observe all sections for animation
-document.querySelectorAll('section').forEach(section => {
-    observer.observe(section);
-});
+function observeRevealElement(element) {
+    if (element && element.classList && element.classList.contains('reveal')) {
+        revealObserver.observe(element);
+    }
+}
+
+function observeInitialRevealElements() {
+    document.querySelectorAll('.reveal').forEach(el => observeRevealElement(el));
+}
+
+const navHighlightObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        const id = entry.target.getAttribute('id');
+        if (!id) return;
+
+        const link = document.querySelector(`.nav-menu a[href="#${id}"]`);
+        if (!link) return;
+
+        if (entry.isIntersecting) {
+            document.querySelectorAll('.nav-link.active').forEach(a => a.classList.remove('active'));
+            link.classList.add('active');
+        }
+    });
+}, { rootMargin: '-40% 0px -55% 0px', threshold: 0 });
+
+function observeNavSections() {
+    document.querySelectorAll('section[id]').forEach(section => navHighlightObserver.observe(section));
+}
 
 // Typing animation for hero title
 function typeWriter(element, text, speed = 100) {
@@ -282,29 +364,10 @@ function typeWriter(element, text, speed = 100) {
 }
 
 // Initialize typing animation when page loads
-window.addEventListener('load', () => {
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        const originalText = heroTitle.textContent;
-        typeWriter(heroTitle, originalText, 150);
-    }
-    
-    // Load profile data
+document.addEventListener('DOMContentLoaded', () => {
+    observeInitialRevealElements();
+    observeNavSections();
     loadProfileData();
-});
-
-// Add scroll reveal animation
-window.addEventListener('scroll', () => {
-    const elements = document.querySelectorAll('.fade-in-up');
-    
-    elements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-        
-        if (elementTop < window.innerHeight - elementVisible) {
-            element.classList.add('fade-in-up');
-        }
-    });
 });
 
 // Add hover effects for skill cards

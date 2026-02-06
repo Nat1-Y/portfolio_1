@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Natnael Yohannes - Backend Developer</title>
+    <title>Natnael Yohannes - Full Stack Developer</title>
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <div class="scroll-progress" id="scroll-progress"></div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -43,16 +45,16 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-container">
-            <div class="hero-content">
-                <h1 class="hero-title">NATNAEL YOHANNES</h1>
-                <h2 class="hero-subtitle">Backend Developer</h2>
-                <p class="hero-description">Dedicated backend developer with expertise in Flutter, Node.js, and cross-platform mobile development.</p>
+            <div class="hero-content reveal">
+                <h1 class="hero-title" id="hero-name">Loading...</h1>
+                <h2 class="hero-subtitle" id="hero-title">Loading...</h2>
+                <p class="hero-description" id="hero-tagline">Loading...</p>
                 <div class="hero-buttons">
                     <a href="#contact" class="btn btn-primary">Get In Touch</a>
                     <a href="#about" class="btn btn-secondary">Learn More</a>
                 </div>
             </div>
-            <div class="hero-image">
+            <div class="hero-image reveal">
                 <div class="profile-placeholder">
                     <img src="Nati.jpg" alt="Natnael Yohannes">
                 </div>
@@ -63,21 +65,21 @@
     <!-- About Section -->
     <section id="about" class="about">
         <div class="container">
-            <h2 class="section-title">About Me</h2>
+            <h2 class="section-title reveal">About Me</h2>
             <div class="about-content">
-                <div class="about-text">
+                <div class="about-text reveal">
                     <p id="profile-text">Loading...</p>
                 </div>
                 <div class="about-stats">
-                    <div class="stat">
+                    <div class="stat reveal">
                         <h3>2+</h3>
                         <p>Years Experience</p>
                     </div>
-                    <div class="stat">
+                    <div class="stat reveal">
                         <h3>10+</h3>
                         <p>Projects Completed</p>
                     </div>
-                    <div class="stat">
+                    <div class="stat reveal">
                         <h3>5+</h3>
                         <p>Technologies</p>
                     </div>
@@ -89,7 +91,7 @@
     <!-- Experience Section -->
     <section id="experience" class="experience">
         <div class="container">
-            <h2 class="section-title">Experience</h2>
+            <h2 class="section-title reveal">Experience</h2>
             <div class="timeline" id="experience-timeline">
                 <!-- Experience items will be loaded here -->
             </div>
@@ -99,7 +101,7 @@
     <!-- Skills Section -->
     <section id="skills" class="skills">
         <div class="container">
-            <h2 class="section-title">Skills</h2>
+            <h2 class="section-title reveal">Skills</h2>
             <div class="skills-grid" id="skills-grid">
                 <!-- Skills will be loaded here -->
             </div>
@@ -109,8 +111,8 @@
     <!-- Education Section -->
     <section id="education" class="education">
         <div class="container">
-            <h2 class="section-title">Education</h2>
-            <div class="education-card">
+            <h2 class="section-title reveal">Education</h2>
+            <div class="education-card reveal">
                 <div class="education-content">
                     <h3 id="education-institution">Loading...</h3>
                     <p id="education-degree">Loading...</p>
@@ -122,24 +124,24 @@
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
+            <h2 class="section-title reveal">Get In Touch</h2>
             <div class="contact-content">
                 <div class="contact-info">
-                    <div class="contact-item">
+                    <div class="contact-item reveal">
                         <i class="fas fa-phone"></i>
                         <div>
                             <h3>Phone</h3>
                             <p id="contact-phone">Loading...</p>
                         </div>
                     </div>
-                    <div class="contact-item">
+                    <div class="contact-item reveal">
                         <i class="fas fa-envelope"></i>
                         <div>
                             <h3>Email</h3>
                             <p id="contact-email">Loading...</p>
                         </div>
                     </div>
-                    <div class="contact-item">
+                    <div class="contact-item reveal">
                         <i class="fab fa-github"></i>
                         <div>
                             <h3>GitHub</h3>
@@ -147,7 +149,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="contact-form">
+                <div class="contact-form reveal">
                     <form id="contact-form">
                         <div class="form-group">
                             <input type="text" id="name" name="name" placeholder="Your Name" required>
@@ -172,6 +174,10 @@
         </div>
     </footer>
 
+    <button class="back-to-top" id="back-to-top" type="button" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
     <script src="script.js"></script>
 </body>
-</html> 
+</html>
