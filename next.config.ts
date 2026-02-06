@@ -6,4 +6,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-// Force deployment: 2026-02-06 20:20
