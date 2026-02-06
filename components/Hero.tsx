@@ -57,8 +57,13 @@ export default function Hero() {
                 transition={{ delay: 1.2 }}
                 className="mt-12 flex gap-4"
             >
-                <div className="w-32 h-32 border border-dashed border-muted flex items-center justify-center rotate-3 opacity-50 grayscale hover:grayscale-0 transition-all duration-500 bg-card">
-                    <span className="font-mono text-xs text-center p-2">SUSPECT PHOTO MISSING</span>
+                <div className="w-32 h-32 border border-dashed border-muted flex items-center justify-center rotate-3 overflow-hidden bg-card grayscale hover:grayscale-0 transition-all duration-500">
+                    <img
+                        src="/Suspect_photo.JPG"
+                        alt="Suspect photo"
+                        className="w-full h-full object-cover opacity-90"
+                        loading="eager"
+                    />
                 </div>
                 <div className="font-mono text-xs text-muted-foreground space-y-2 mt-4">
                     <p>LAST SEEN: {profileData.experience[0].location}</p>
