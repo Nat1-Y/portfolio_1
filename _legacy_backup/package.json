@@ -1,0 +1,22 @@
+{
+  "name": "natnael-portfolio",
+  "version": "1.0.0",
+  "description": "Natnael Yohannes Portfolio Website",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": ["portfolio", "backend", "developer", "flutter"],
+  "author": "Natnael Yohannes",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "compression": "^1.7.4"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+} 
