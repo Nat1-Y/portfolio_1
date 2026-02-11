@@ -11,6 +11,7 @@ const links = [
     { href: "/", label: "Case #404", icon: Skull },
     { href: "#suspect", label: "Suspect", icon: User },
     { href: "#evidence", label: "Evidence", icon: FolderOpen },
+    { href: "#modus-operandi", label: "Modus Operandi", icon: Briefcase },
     { href: "#timeline", label: "Timeline", icon: FileText },
 ];
 
@@ -19,15 +20,14 @@ export default function Navigation() {
     const pathname = usePathname();
 
     return (
-        <header className="fixed top-0 w-full z-40 bg-background/80 backdrop-blur-md border-b border-border/40">
-            <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
-                <Link href="/" className="text-xl font-bold font-mono tracking-tighter text-primary flex items-center gap-2">
-                    <Skull className="w-6 h-6" />
-                    CASE_FILE_<span className="text-foreground">#404</span>
-                </Link>
+        <header className="fixed top-0 w-full z-40 bg-transparent pointer-events-none">
+            {/* Gradient Overlay for legibility */}
+            <div className="absolute inset-0 h-24 bg-gradient-to-b from-background to-transparent -z-10" />
 
-                {/* Desktop Nav - File Tabs Style */}
-                <div className="hidden md:flex items-end h-full">
+            <nav className="container mx-auto px-4 h-16 flex items-start justify-center pt-2 pointer-events-auto">
+
+                {/* Desktop Nav - Folder Tabs Style */}
+                <div className="hidden md:flex items-end h-full space-x-1 perspective-500">
                     {links.map((link) => {
                         const isActive = pathname === link.href || (link.href !== "/" && pathname.includes(link.href));
                         return (
@@ -35,20 +35,18 @@ export default function Navigation() {
                                 key={link.href}
                                 href={link.href}
                                 className={cn(
-                                    "relative px-6 py-2 h-10 flex items-center gap-2 text-sm font-medium transition-colors border-t border-l border-r border-transparent rounded-t-lg mx-1",
+                                    "relative px-6 py-2 pb-3 h-12 flex items-center gap-2 text-sm font-bold tracking-wider transition-all duration-300 clip-path-polygon",
                                     isActive
-                                        ? "bg-card text-primary border-border translate-y-[1px]"
-                                        : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
+                                        ? "bg-[#e2d5b5] text-red-900 border-t-2 border-red-900 shadow-[0_-5px_15px_-5px_rgba(0,0,0,0.3)] z-10 translate-y-2 scale-110"
+                                        : "bg-[#2a2a2a] text-gray-500 hover:text-gray-300 hover:bg-[#333] translate-y-4 hover:translate-y-2"
                                 )}
+                                style={{
+                                    clipPath: "polygon(10% 0, 90% 0, 100% 100%, 0% 100%)",
+                                }}
                             >
-                                <link.icon className="w-4 h-4" />
-                                {link.label}
-                                {isActive && (
-                                    <motion.div
-                                        layoutId="activeTab"
-                                        className="absolute bottom-0 left-0 w-full h-[2px] bg-background"
-                                    />
-                                )}
+                                {/* Only show icon for Case #404 to save space/style */}
+                                {link.href === "/" && <link.icon className="w-4 h-4" />}
+                                {!isActive && link.href === "/" ? "CASE FILE" : link.label.toUpperCase()}
                             </Link>
                         );
                     })}

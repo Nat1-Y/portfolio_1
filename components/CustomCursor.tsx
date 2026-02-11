@@ -14,12 +14,13 @@ export default function CustomCursor() {
 
     useEffect(() => {
         const moveCursor = (e: MouseEvent) => {
-            cursorX.set(e.clientX - 16);
-            cursorY.set(e.clientY - 16);
+            cursorX.set(e.clientX);
+            cursorY.set(e.clientY);
         };
 
         const handleMouseOver = (e: MouseEvent) => {
-            if ((e.target as HTMLElement).tagName === "A" || (e.target as HTMLElement).closest("a") || (e.target as HTMLElement).tagName === "BUTTON") {
+            const target = e.target as HTMLElement;
+            if (target.tagName === "A" || target.closest("a") || target.tagName === "BUTTON") {
                 setIsHovering(true);
             } else {
                 setIsHovering(false);
@@ -37,21 +38,36 @@ export default function CustomCursor() {
 
     return (
         <motion.div
-            className="fixed top-0 left-0 w-8 h-8 pointer-events-none z-50 flex items-center justify-center mix-blend-difference"
+            className="fixed top-0 left-0 pointer-events-none z-[9999] mix-blend-difference"
             style={{
-                translateX: cursorXSpring,
-                translateY: cursorYSpring,
+                x: cursorXSpring,
+                y: cursorYSpring,
+                translateX: "-50%",
+                translateY: "-50%",
             }}
         >
+            {/* Magnifying Glass SVG */}
             <motion.div
-                className={`rounded-full border-2 border-primary bg-transparent transition-all duration-200 ${isHovering ? "w-12 h-12 border-4 bg-primary/20 scale-125" : "w-6 h-6"}`}
-                layoutId="cursor"
-            />
-
-            {/* Magnifying Glass Handle (only visible when hovering or creating effect) */}
-            <motion.div
-                className={`absolute -bottom-4 -right-4 w-6 h-1 bg-primary origin-top-left -rotate-45 ${isHovering ? "opacity-100" : "opacity-0"}`}
-            />
+                animate={{
+                    scale: isHovering ? 1.5 : 1,
+                    rotate: isHovering ? -15 : 0,
+                }}
+                className="relative"
+            >
+                <svg
+                    width="60"
+                    height="60"
+                    viewBox="0 0 100 100"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="drop-shadow-lg"
+                >
+                    <circle cx="40" cy="40" r="30" stroke="white" strokeWidth="6" fill="rgba(255, 255, 255, 0.1)" />
+                    <path d="M62 62L85 85" stroke="white" strokeWidth="8" strokeLinecap="round" />
+                    {/* Glass Reflection */}
+                    <path d="M25 25C25 25 30 20 40 20" stroke="white" strokeWidth="3" strokeLinecap="round" opacity="0.5" />
+                </svg>
+            </motion.div>
         </motion.div>
     );
 }

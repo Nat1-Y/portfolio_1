@@ -3,6 +3,7 @@ import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import SuspectProfile from "@/components/SuspectProfile";
 import Evidence from "@/components/Evidence";
+import ModusOperandi from "@/components/ModusOperandi";
 import Timeline from "@/components/Timeline";
 
 
@@ -12,18 +13,14 @@ export default function Home() {
       <CustomCursor />
       <Navigation />
 
-      <div className="container mx-auto px-4 pt-24 pb-12 space-y-24">
+      <div className="container mx-auto px-4 pt-24 pb-12">
         <Hero />
-        <section id="suspect" className="scroll-mt-24">
-          <SuspectProfile />
-        </section>
-        <section id="evidence" className="scroll-mt-24">
-          {/* Evidence/Projects Component will go here */}
-          <Evidence />
-        </section>
-
-        <Timeline />
       </div>
+
+      <SuspectProfile />
+      <Evidence />
+      <ModusOperandi />
+      <Timeline />
     </main>
   );
 }
