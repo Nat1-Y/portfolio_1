@@ -8,43 +8,47 @@ import { ExternalLink, Github, Search } from "lucide-react";
 const evidenceItems = [
     {
         id: "EV-001",
-        title: "Syntax Software",
-        type: "Corporate",
-        tech: ["React", "Node.js", "PostgreSQL"],
-        description: "Full stack product development and maintenance.",
+        title: "Syntax Exit Exam",
+        type: "Full Stack",
+        tech: ["React", "Node.js", "PostgreSQL", "Express"],
+        description: "Syntax Software Exit Exam app. Full stack product development and maintenance.",
         status: "DEPLOYED",
-        image: "https://placehold.co/600x400/1a1a1a/FFF?text=Syntax+Software"
+        image: "https://placehold.co/600x400/1a1a1a/FFF?text=Syntax+Exam",
+        link: "https://melaexam.com"
     },
     {
         id: "EV-002",
-        title: "Freelance Portfolio",
-        type: "Client Work",
-        tech: ["Next.js", "Framer Motion", "Tailwind"],
-        description: "High-performance websites for international clients.",
+        title: "Football Fields",
+        type: "Full Stack",
+        tech: ["React", "Node.js", "MongoDB", "Express"],
+        description: "Football fields app. Full stack product development and maintenance.",
         status: "VERIFIED",
-        image: "https://placehold.co/600x400/2a2a2a/FFF?text=Client+Work"
+        image: "https://placehold.co/600x400/2a2a2a/FFF?text=Football+App",
+        link: "http://football.intricateengineeringplc.com/"
     },
     {
         id: "EV-003",
-        title: "Flutter Apps",
-        type: "Mobile",
-        tech: ["Flutter", "Firebase"],
-        description: "Cross-platform mobile applications with responsive design.",
+        title: "Rental App",
+        type: "Full Stack",
+        tech: ["React", "Node.js", "MongoDB", "Express"],
+        description: "Rental management app. Full stack product development and maintenance.",
         status: "PROTOTYPE",
-        image: "https://placehold.co/600x400/3a3a3a/FFF?text=Flutter+Apps"
+        image: "https://placehold.co/600x400/3a3a3a/FFF?text=Rental+App",
+        link: "https://rentalms.awardgamings.com/"
     },
     {
         id: "EV-004",
-        title: "API Gateway",
-        type: "Backend",
-        tech: ["Nest.js", "Docker"],
-        description: "Scalable REST API architecture handling auth & validation.",
+        title: "Zeban Security",
+        type: "Full Stack",
+        tech: ["React", "Node.js", "MongoDB", "Express"],
+        description: "Security app. Full stack product development and maintenance.",
         status: "CLASSIFIED",
-        image: "https://placehold.co/600x400/0f0f0f/FFF?text=API+Gateway"
+        image: "https://placehold.co/600x400/0f0f0f/FFF?text=Zeban+Security",
+        link: "https://zebansecurityservices.com/"
     }
 ];
 
-const filters = ["ALL", "REACT", "NEXT.JS", "FLUTTER", "BACKEND"];
+const filters = ["ALL", "REACT", "NODE.JS", "MERN", "PERN"];
 
 export default function Evidence() {
     const [filter, setFilter] = useState("ALL");
@@ -99,8 +103,8 @@ export default function Evidence() {
                             <motion.div
                                 key={item.id}
                                 layout
-                                initial={{ opacity: 0, scale: 0.8, rotate: Math.random() * 10 - 5 }}
-                                animate={{ opacity: 1, scale: 1, rotate: hoveredId === item.id ? 0 : Math.random() * 6 - 3 }}
+                                initial={{ opacity: 0, scale: 0.8, rotate: (index % 2 === 0 ? -1 : 1) * ((index % 4) + 2) }}
+                                animate={{ opacity: 1, scale: 1, rotate: hoveredId === item.id ? 0 : (index % 2 === 0 ? -1 : 1) * ((index % 4) + 2) }}
                                 exit={{ opacity: 0, scale: 0.8 }}
                                 transition={{ duration: 0.4 }}
                                 onHoverStart={() => setHoveredId(item.id)}
@@ -113,7 +117,12 @@ export default function Evidence() {
                                 <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 bg-red-600 rounded-full shadow-md z-20 border border-red-900"></div>
 
                                 {/* Polaroid Card */}
-                                <div className="bg-white p-3 pb-12 shadow-2xl transform transition-transform duration-300 group-hover:scale-105 group-hover:-translate-y-2 relative">
+                                <a
+                                    href={item.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="block bg-white p-3 pb-12 shadow-2xl transform transition-transform duration-300 group-hover:scale-105 group-hover:-translate-y-2 relative cursor-pointer"
+                                >
                                     <div className="aspect-video bg-gray-900 border border-gray-200 overflow-hidden relative group-cursor-zoom-in">
                                         {/* Placeholder Image or Real Image */}
                                         <img
@@ -148,7 +157,7 @@ export default function Evidence() {
                                             {item.status}
                                         </span>
                                     </div>
-                                </div>
+                                </a>
                             </motion.div>
                         ))}
                     </AnimatePresence>

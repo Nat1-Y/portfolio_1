@@ -87,9 +87,9 @@ export default function Timeline() {
                                 {[...Array(160)].map((_, i) => (
                                     <div
                                         key={i}
-                                        className={`w-3 h-3 rounded-sm ${Math.random() > 0.7 ? 'bg-green-500' :
-                                            Math.random() > 0.5 ? 'bg-green-700' :
-                                                Math.random() > 0.3 ? 'bg-green-900' : 'bg-gray-800'
+                                        className={`w-3 h-3 rounded-sm ${(i * 37) % 100 > 70 ? 'bg-green-500' :
+                                                (i * 37) % 100 > 50 ? 'bg-green-700' :
+                                                    (i * 37) % 100 > 30 ? 'bg-green-900' : 'bg-gray-800'
                                             }`}
                                     ></div>
                                 ))}
