@@ -5,6 +5,7 @@ npm install
 run npm install
 First, run the development server:
 an run migrations with a seed
+seeds
 ```bash
 npm run dev
 # or
