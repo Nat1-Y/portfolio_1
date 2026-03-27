@@ -26,7 +26,7 @@ for local only
 ## Learn More
 Nest.js
 To learn more about Next.js, take a look at the following resources:
-
+React and next.js
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
